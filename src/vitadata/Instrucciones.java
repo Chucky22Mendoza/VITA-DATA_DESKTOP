@@ -87,7 +87,7 @@ public class Instrucciones extends javax.swing.JInternalFrame {
 
     private void btnInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsActionPerformed
         Derechos _der = new Derechos();
-        pantallaPrincipal.desktop.add(_der);
+        pantallaPrincipal.desktop.add(_der);        
         _der.toFront();
         _der.setVisible(true);
         this.dispose();
