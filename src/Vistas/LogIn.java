@@ -6,8 +6,6 @@
 package Vistas;
 
 import Conexiones.Conexion;
-import Conexiones.DBConect;
-import com.placeholder.PlaceHolder;
 import com.sun.awt.AWTUtilities;
 import java.awt.HeadlessException;
 import java.awt.MouseInfo;
@@ -15,7 +13,6 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
-import vitadata.pantallaPrincipal;
 
 /**
  *
@@ -320,8 +317,8 @@ public class LogIn extends javax.swing.JFrame {
             try {
                 conect.getConexion(_user, _pass);
                 JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
-                Doctor  _doc = new Doctor();
-                _doc.setVisible(true);
+                Secretaria  _sec = new Secretaria();
+                _sec.setVisible(true);
                 this.dispose();                
             }catch(HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
