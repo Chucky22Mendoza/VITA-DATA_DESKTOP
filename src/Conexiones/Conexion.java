@@ -7,6 +7,7 @@ package Conexiones;
 
 import Procedimientos.ActualizarDoctor;
 import Procedimientos.BorrarDoctor;
+import Procedimientos.BusquedaDoctor;
 import Procedimientos.GuardarDoctor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class Conexion {
     static ResultSet _rs;
     static PreparedStatement _ps;    
     static Statement _st;
-    static String _user, _pass;
+    static String _user, _pass, _sql;
     //Método para conectar con 2 variables de entrada que son usuario y contraseña
     public Connection getConexion(String _usuario, String _contraseña){        
         try{
@@ -37,7 +38,7 @@ public class Conexion {
             _pass = _contraseña;            
             Class.forName(_driver); //Mandar a llamar el driver             
             _con=DriverManager.getConnection(_url,_user,_pass); //Hacer la conexión dependiendo del usuario ingresado en la interfz
-            System.out.println("Conexión realizada");//debug 3
+            System.out.println("Conexión realizada");//debug 3            
         }catch (Exception e){
             System.out.println("Error de conexión: " + e);
         }     
@@ -56,7 +57,10 @@ public class Conexion {
             _csta.setString(5, dts.getUsuario());
             _csta.setString(6, dts.getContraseña());
             
-            _rs = _csta.executeQuery();
+            int _res = _csta.executeUpdate();
+            System.out.println("debug");
+            _con.close();
+            _rs.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -74,6 +78,8 @@ public class Conexion {
             
             int _res = _csta.executeUpdate();
             System.out.println(_res);
+            _con.close();
+            _rs.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -89,6 +95,8 @@ public class Conexion {
             int _res = _csta.executeUpdate();
             System.out.println(_res);
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
+            _con.close();
+            _rs.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "El doctor ya está Inactivo", "Error",1);         
         } 
@@ -104,6 +112,8 @@ public class Conexion {
             int _res = _csta.executeUpdate();
             System.out.println(_res);
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
+            _con.close();
+            _rs.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "El doctor ya está Activo", "Error",1);     
         } 
@@ -131,18 +141,69 @@ public class Conexion {
                 
                 _mod.addRow(registro);
             }
-            
+            _con.close();
+            _rs.close();
             return _mod;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
+    
+    public DefaultTableModel BusquedaDoctor(BusquedaDoctor dts){
+        DefaultTableModel _mod;
+        String [] titulos = {"Cedula", "Doctor", "Telefono","Hospital", "Usuario"};
+        
+        String [] registro = new String [5];
+        
+        _mod = new DefaultTableModel(null,titulos);
+        
+        try {
+            _con = this.getConexion(_user, _pass);
+            
+            if (!dts.getCedula().equals("")){
+                    _sql = "select _cedula, D._nombre, D._telefono, _hospital = I._nombre, _usuario "
+                    + "from Doctor D inner join Institucion I on D._hospital = I._idIns "
+                            + "where D._cedula like concat('%','" + dts.getCedula()+"','%') ";
+            }else{
+                if (!dts.getHospital().equals("")){
+                    _sql = "select _cedula, D._nombre, D._telefono, _hospital = I._nombre, _usuario "
+                    + "from Doctor D inner join Institucion I on D._hospital = I._idIns where I._nombre like concat('%','" + dts.getHospital()+"','%') "; ;
+            }else{
+                    if (!dts.getNombre().equals("")){
+                           _sql = "select _cedula, D._nombre, D._telefono, _hospital = I._nombre, _usuario "
+                           + "from Doctor D inner join Institucion I on D._hospital = I._idIns where D._nombre like concat('%','" + dts.getNombre()+"','%') "; ;
+                   }
+                }
+            }            
+            
+            _st = _con.createStatement();
+            _rs = _st.executeQuery(_sql);
+            
+            while(_rs.next()){
+                registro [0] = _rs.getString("_cedula");
+                registro [1] = _rs.getString("_nombre");
+                registro [2] = _rs.getString("_telefono");
+                registro [3] = _rs.getString("_hospital");
+                registro [4] = _rs.getString("_usuario");
+                
+                _mod.addRow(registro);
+            }
+            _con.close();
+            _rs.close();
+            return _mod;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    
+    
     public DefaultComboBoxModel getvalues1(){
         DefaultComboBoxModel _mod = new DefaultComboBoxModel();
         try{
             _con = this.getConexion(_user, _pass);
-            String _sql = "Select * from Institucion";
+            _sql = "Select * from Institucion";
             _st = _con.createStatement();
             _rs = _st.executeQuery(_sql);
             while(_rs.next()){
@@ -159,7 +220,7 @@ public class Conexion {
         DefaultComboBoxModel _mod = new DefaultComboBoxModel();
         try{
             _con = this.getConexion(_user, _pass);
-            String _sql = "Select * from Paciente";
+             _sql = "Select * from Paciente";
             _st = _con.createStatement();
             _rs = _st.executeQuery(_sql);
             while(_rs.next()){
@@ -176,7 +237,7 @@ public class Conexion {
         DefaultComboBoxModel _mod = new DefaultComboBoxModel();
         try{
             _con = this.getConexion(_user, _pass);
-            String _sql = "Select * from Doctor where _estado = 'Activo'";
+            _sql = "Select * from Doctor where _estado = 'Activo'";
             _st = _con.createStatement();
             _rs = _st.executeQuery(_sql);
             while(_rs.next()){

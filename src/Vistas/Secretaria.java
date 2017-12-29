@@ -8,6 +8,7 @@ package Vistas;
 import Conexiones.Conexion;
 import Procedimientos.ActualizarDoctor;
 import Procedimientos.BorrarDoctor;
+import Procedimientos.BusquedaDoctor;
 import Procedimientos.GuardarDoctor;
 import com.sun.awt.AWTUtilities;
 import java.awt.MouseInfo;
@@ -44,6 +45,9 @@ public class Secretaria extends javax.swing.JFrame {
         cbDoctorDis.setModel(_con.getvalues3());
         fecha();        
         mostrarDoctores();
+        addItem();
+        bloquear1();
+        limpiar1();
     }
     
     void fecha(){
@@ -62,6 +66,71 @@ public class Secretaria extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
+    }
+    
+    void addItem(){
+        cbBuscar1.addItem("Cédula");
+        cbBuscar1.addItem("Nombre");
+        cbBuscar1.addItem("Hospital");        
+    }
+    
+    void bloquear1(){
+        btnGuardar1.setEnabled(false);
+        btnCancelar1.setEnabled(false);
+        btnActualizar1.setEnabled(false);
+        btnModificar1.setEnabled(true);        
+        btnInaAct.setEnabled(true);
+        txtCedula.setEnabled(false);
+        txtNombre1.setEnabled(false);
+        txtTelefono1.setEnabled(false);
+        txtTelefono2.setEnabled(false);
+        txtTelefono3.setEnabled(false);
+        txtTelefono4.setEnabled(false);
+        cbHospital.setEnabled(false);
+        txtUsuario1.setEnabled(false);
+        txtContraseña1.setEnabled(false);
+        txtConfContraseña1.setEnabled(false);      
+        btnNuevo1.setEnabled(true);
+    }
+    
+    void desbloquearNuevo1(){
+        btnNuevo1.setEnabled(false);
+        btnGuardar1.setEnabled(true);
+        btnCancelar1.setEnabled(true);
+        txtCedula.setEnabled(true);
+        txtNombre1.setEnabled(true);
+        txtTelefono1.setEnabled(true);
+        txtTelefono2.setEnabled(true);
+        txtTelefono3.setEnabled(true);
+        txtTelefono4.setEnabled(true);
+        cbHospital.setEnabled(true);
+        txtUsuario1.setEnabled(true);
+        txtContraseña1.setEnabled(true);
+        txtConfContraseña1.setEnabled(true);        
+    }
+    
+    void desbloquearModificar1(){
+        btnActualizar1.setEnabled(true);        
+        btnCancelar1.setEnabled(true);
+        txtNombre1.setEnabled(true);
+        txtTelefono1.setEnabled(true);
+        txtTelefono2.setEnabled(true);
+        txtTelefono3.setEnabled(true);
+        txtTelefono4.setEnabled(true);
+        cbHospital.setEnabled(true);
+    }
+    
+    void limpiar1(){
+        txtCedula.setText("");
+        txtNombre1.setText("");
+        txtTelefono1.setText("");
+        txtTelefono2.setText("");
+        txtTelefono3.setText("");
+        txtTelefono4.setText("");
+        cbHospital.setSelectedIndex(0);
+        txtUsuario1.setText("");
+        txtContraseña1.setText("");
+        txtConfContraseña1.setText("");
     }
 
     /**
@@ -104,7 +173,7 @@ public class Secretaria extends javax.swing.JFrame {
         btnCancelar1 = new org.edisoncor.gui.button.ButtonAction();
         btnActualizar1 = new org.edisoncor.gui.button.ButtonAction();
         btnModificar1 = new org.edisoncor.gui.button.ButtonAction();
-        btnInactivo = new org.edisoncor.gui.button.ButtonAction();
+        btnInaAct = new org.edisoncor.gui.button.ButtonAction();
         txtBuscar1 = new org.edisoncor.gui.textField.TextFieldRoundBackground();
         btnMostrar1 = new org.edisoncor.gui.button.ButtonAction();
         btnBuscar1 = new org.edisoncor.gui.button.ButtonAction();
@@ -356,6 +425,11 @@ public class Secretaria extends javax.swing.JFrame {
         });
 
         btnCancelar1.setText("CANCELAR");
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelar1ActionPerformed(evt);
+            }
+        });
 
         btnActualizar1.setText("ACTUALIZAR");
         btnActualizar1.addActionListener(new java.awt.event.ActionListener() {
@@ -371,10 +445,10 @@ public class Secretaria extends javax.swing.JFrame {
             }
         });
 
-        btnInactivo.setText("Inactivo/Activo");
-        btnInactivo.addActionListener(new java.awt.event.ActionListener() {
+        btnInaAct.setText("Inactivo/Activo");
+        btnInaAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInactivoActionPerformed(evt);
+                btnInaActActionPerformed(evt);
             }
         });
 
@@ -391,6 +465,11 @@ public class Secretaria extends javax.swing.JFrame {
         });
 
         btnBuscar1.setText("BUSCAR");
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
 
         docTable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         docTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -445,7 +524,6 @@ public class Secretaria extends javax.swing.JFrame {
         cbBuscar1.setBackground(new java.awt.Color(153, 153, 153));
         cbBuscar1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         cbBuscar1.setForeground(new java.awt.Color(255, 255, 255));
-        cbBuscar1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "item1", "item2" }));
         cbBuscar1.setNextFocusableComponent(txtUsuario1);
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
@@ -483,12 +561,15 @@ public class Secretaria extends javax.swing.JFrame {
                                 .addComponent(txtTelefono4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInactivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnActualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGuardar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnActualizar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel21Layout.createSequentialGroup()
+                                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnInaAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnGuardar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(1, 1, 1))))
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,12 +660,12 @@ public class Secretaria extends javax.swing.JFrame {
                                 .addComponent(btnGuardar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(20, 20, 20)
+                                .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnActualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnInactivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInaAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -942,10 +1023,8 @@ public class Secretaria extends javax.swing.JFrame {
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel22Layout.createSequentialGroup()
-                                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel22)
-                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(15, 15, 15)
+                                .addComponent(jLabel22)
+                                .addGap(19, 19, 19)
                                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel16)
                                     .addComponent(txtCalle1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -978,7 +1057,9 @@ public class Secretaria extends javax.swing.JFrame {
                                             .addComponent(jLabel14)
                                             .addComponent(jLabel13)))))
                             .addGroup(jPanel22Layout.createSequentialGroup()
-                                .addComponent(btnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnGuardar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -1372,15 +1453,7 @@ public class Secretaria extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuario1ActionPerformed
 
     private void txtContraseña1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseña1KeyTyped
-        char c = evt.getKeyChar();
-        int limite = 5;
-        int _con = txtContraseña1.getText().length();
-        
-        if(_con<=limite){
-            System.out.println("Contraseña inválida");
-//            JOptionPane.showMessageDialog(null, "Contraseña inválida, debe ser mayor a 6 carácteres","Error de validación",3);
-        }
-        
+        char c = evt.getKeyChar();                
         if(c == KeyEvent.VK_TAB){
                 txtConfContraseña1.requestFocus();                
             }
@@ -1559,7 +1632,7 @@ public class Secretaria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerDoctorActionPerformed
 
     private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
-        
+        desbloquearNuevo1();
     }//GEN-LAST:event_btnNuevo1ActionPerformed
 
     private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
@@ -1568,7 +1641,9 @@ public class Secretaria extends javax.swing.JFrame {
         
         int limite = 7;
         int lc = txtCedula.getText().length();
-
+        int limite2 = 5;
+        int lp = txtContraseña1.getText().length();
+        
         String _ced = txtCedula.getText ();
         String _nom = txtNombre1.getText();
         String _tel1 = txtTelefono1.getText();
@@ -1593,8 +1668,15 @@ public class Secretaria extends javax.swing.JFrame {
         } else{
             if (_pass.equals(_cPass)){
                 if(limite == lc){
-                    _con.insertarDoctor(dts);
-                    JOptionPane.showMessageDialog(null, "Se ha registrado correctamente", "Completado",1);
+                    if(lp >= limite2){
+                        _con.insertarDoctor(dts);
+                        JOptionPane.showMessageDialog(null, "Se ha registrado correctamente", "Completado",1);
+                        limpiar1();
+                        bloquear1();
+                        mostrarDoctores();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "La contraseña debe contar al menos con 5 caracteres", "Error",2);
+                    }                    
                 }else{
                     JOptionPane.showMessageDialog(null, "La cedula no es correcta, favor de revisarla", "Error",2);
                 }             
@@ -1633,8 +1715,10 @@ public class Secretaria extends javax.swing.JFrame {
         } else{                            
             
                 _con.actualizarDoctor(dts);
-                JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                
-                    
+                JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);       
+                limpiar1();
+                bloquear1();
+                mostrarDoctores();
        }            
         
     }//GEN-LAST:event_btnActualizar1ActionPerformed
@@ -1645,13 +1729,14 @@ public class Secretaria extends javax.swing.JFrame {
         if ( _fila >= 0 ){
             txtCedula.setText(docTable.getValueAt(_fila, 0).toString());
             txtNombre1.setText(docTable.getValueAt(_fila, 1).toString());                        
-            
+            desbloquearModificar1();
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada","Error", 2);
         }
+        
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
-    private void btnInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactivoActionPerformed
+    private void btnInaActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInaActActionPerformed
         BorrarDoctor dts = new BorrarDoctor();
         Conexion _con = new Conexion();
         
@@ -1676,7 +1761,82 @@ public class Secretaria extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Fila no seleccionada","Error", 2);
         }
-    }//GEN-LAST:event_btnInactivoActionPerformed
+    }//GEN-LAST:event_btnInaActActionPerformed
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        bloquear1();
+        limpiar1();
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        Conexion _con = new Conexion();
+        BusquedaDoctor _dts = new BusquedaDoctor();
+        
+        String _var = cbBuscar1.getSelectedItem().toString();
+        String _bus = txtBuscar1.getText();                
+        
+        if (_var.equals("Cédula")){
+            DefaultTableModel _mod;            
+            _dts.setCedula(_bus);
+            _dts.setNombre("");
+            _dts.setHospital("");
+            _mod = _con.BusquedaDoctor(_dts);
+            docTable.setModel(_mod);
+            int _fila = docTable.getRowCount();
+            System.out.println(_fila);
+            if(_fila > 0){
+                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);    
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+                mostrarDoctores();
+            }         
+        }
+        if (_var.equals("Nombre")){
+            DefaultTableModel _mod;       
+            _dts.setCedula("");
+            _dts.setNombre(_bus);
+            _dts.setHospital("");
+            _mod = _con.BusquedaDoctor(_dts);
+            docTable.setModel(_mod);
+            int _fila = docTable.getRowCount();
+            System.out.println(_fila);
+            if(_fila > 0){
+                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);    
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+                mostrarDoctores();
+            }                       
+        }
+        if (_var.equals("Hospital")){
+            DefaultTableModel _mod;            
+            _dts.setCedula("");
+            _dts.setNombre("");
+            _dts.setHospital(_bus);
+            _mod = _con.BusquedaDoctor(_dts);
+            docTable.setModel(_mod);
+           int _fila = docTable.getRowCount();
+            System.out.println(_fila);
+            if(_fila > 0){
+                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);    
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);
+                txtBuscar1.setText("");
+                cbBuscar1.setSelectedIndex(0);
+                mostrarDoctores();
+            }                
+        }
+        
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1726,7 +1886,7 @@ public class Secretaria extends javax.swing.JFrame {
     private org.edisoncor.gui.button.ButtonAction btnGuardar1;
     private org.edisoncor.gui.button.ButtonAction btnGuardar2;
     private org.edisoncor.gui.button.ButtonAction btnGuardarCita;
-    private org.edisoncor.gui.button.ButtonAction btnInactivo;
+    private org.edisoncor.gui.button.ButtonAction btnInaAct;
     private org.edisoncor.gui.button.ButtonAction btnModificar1;
     private org.edisoncor.gui.button.ButtonAction btnModificar2;
     private org.edisoncor.gui.button.ButtonAction btnMostrar1;
