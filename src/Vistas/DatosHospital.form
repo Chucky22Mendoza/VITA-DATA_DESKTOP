@@ -79,9 +79,9 @@
                           <EmptySpace pref="149" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="lblTelefonoHos" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblEstadoHos" min="-2" max="-2" attributes="0"/>
                               <Component id="lblCiudadHos" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblColoniaHos" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblCalleHos" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNombreHos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                       </Group>
@@ -91,11 +91,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblCalleHos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblColoniaHos" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNombreHos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblCiudadHos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblEstadoHos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblTelefonoHos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="24" max="32767" attributes="0"/>
@@ -104,32 +104,40 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="org.edisoncor.gui.label.LabelTask" name="lblCalleHos">
+                <Component class="org.edisoncor.gui.label.LabelTask" name="lblNombreHos">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/if_137_111075.png"/>
+                      <Image iconType="3" name="/img/if_hospital_45493.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Calle"/>
-                    <Property name="description" type="java.lang.String" value="Calle y n&#xfa;mero"/>
+                    <Property name="description" type="java.lang.String" value="Hospital"/>
                   </Properties>
-                </Component>
-                <Component class="org.edisoncor.gui.label.LabelTask" name="lblColoniaHos">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/if_map_1291745.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Colonia"/>
-                    <Property name="description" type="java.lang.String" value="Colonia"/>
-                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
                 <Component class="org.edisoncor.gui.label.LabelTask" name="lblCiudadHos">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/img/if_City_728922.png"/>
+                      <Image iconType="3" name="/img/if_map_1291745.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ciudad"/>
                     <Property name="description" type="java.lang.String" value="Ciudad"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
+                </Component>
+                <Component class="org.edisoncor.gui.label.LabelTask" name="lblEstadoHos">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/img/if_City_728922.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Estado"/>
+                    <Property name="description" type="java.lang.String" value="Estado"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
                 <Component class="org.edisoncor.gui.label.LabelTask" name="lblTelefonoHos">
                   <Properties>
@@ -142,6 +150,9 @@
                     </Property>
                     <Property name="description" type="java.lang.String" value="Tel&#xe9;fono"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

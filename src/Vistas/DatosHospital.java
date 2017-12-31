@@ -5,6 +5,10 @@
  */
 package Vistas;
 
+import Conexiones.Conexion;
+import Procedimientos.mostrarDoc;
+import java.util.ArrayList;
+
 /**
  *
  * @author mendo
@@ -15,7 +19,7 @@ public class DatosHospital extends javax.swing.JInternalFrame {
      * Creates new form DatosHospital
      */
     public DatosHospital() {
-        initComponents();
+        initComponents();        
     }
 
     /**
@@ -30,9 +34,9 @@ public class DatosHospital extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         panelCurves1 = new org.edisoncor.gui.panel.PanelCurves();
         panelShadow1 = new org.edisoncor.gui.panel.PanelShadow();
-        lblCalleHos = new org.edisoncor.gui.label.LabelTask();
-        lblColoniaHos = new org.edisoncor.gui.label.LabelTask();
+        lblNombreHos = new org.edisoncor.gui.label.LabelTask();
         lblCiudadHos = new org.edisoncor.gui.label.LabelTask();
+        lblEstadoHos = new org.edisoncor.gui.label.LabelTask();
         lblTelefonoHos = new org.edisoncor.gui.label.LabelTask();
 
         setClosable(true);
@@ -40,17 +44,16 @@ public class DatosHospital extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        lblCalleHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_137_111075.png"))); // NOI18N
-        lblCalleHos.setText("Calle");
-        lblCalleHos.setDescription("Calle y número");
+        lblNombreHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_hospital_45493.png"))); // NOI18N
+        lblNombreHos.setDescription("Hospital");
 
-        lblColoniaHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_map_1291745.png"))); // NOI18N
-        lblColoniaHos.setText("Colonia");
-        lblColoniaHos.setDescription("Colonia");
-
-        lblCiudadHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_City_728922.png"))); // NOI18N
+        lblCiudadHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_map_1291745.png"))); // NOI18N
         lblCiudadHos.setText("Ciudad");
         lblCiudadHos.setDescription("Ciudad");
+
+        lblEstadoHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_City_728922.png"))); // NOI18N
+        lblEstadoHos.setText("Estado");
+        lblEstadoHos.setDescription("Estado");
 
         lblTelefonoHos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_telephone_64812.png"))); // NOI18N
         lblTelefonoHos.setText("Teléfono");
@@ -65,20 +68,20 @@ public class DatosHospital extends javax.swing.JInternalFrame {
                 .addContainerGap(149, Short.MAX_VALUE)
                 .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTelefonoHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstadoHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCiudadHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblColoniaHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCalleHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombreHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(116, 116, 116))
         );
         panelShadow1Layout.setVerticalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelShadow1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCalleHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblColoniaHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblNombreHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCiudadHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEstadoHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTelefonoHos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
@@ -120,10 +123,10 @@ public class DatosHospital extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private org.edisoncor.gui.label.LabelTask lblCalleHos;
-    private org.edisoncor.gui.label.LabelTask lblCiudadHos;
-    private org.edisoncor.gui.label.LabelTask lblColoniaHos;
-    private org.edisoncor.gui.label.LabelTask lblTelefonoHos;
+    public static org.edisoncor.gui.label.LabelTask lblCiudadHos;
+    public static org.edisoncor.gui.label.LabelTask lblEstadoHos;
+    public static org.edisoncor.gui.label.LabelTask lblNombreHos;
+    public static org.edisoncor.gui.label.LabelTask lblTelefonoHos;
     private org.edisoncor.gui.panel.PanelCurves panelCurves1;
     private org.edisoncor.gui.panel.PanelShadow panelShadow1;
     // End of variables declaration//GEN-END:variables

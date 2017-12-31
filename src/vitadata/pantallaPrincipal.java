@@ -179,7 +179,6 @@ public class pantallaPrincipal extends javax.swing.JFrame {
         cbItems = new javax.swing.JComboBox<>();
         btnReportes = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        panel3 = new javax.swing.JPanel();
         panel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnVer = new javax.swing.JButton();
@@ -507,21 +506,6 @@ public class pantallaPrincipal extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Registro/Consulta", panel2);
-
-        panel3.setBackground(new java.awt.Color(153, 153, 255));
-
-        javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
-        panel3.setLayout(panel3Layout);
-        panel3Layout.setHorizontalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1523, Short.MAX_VALUE)
-        );
-        panel3Layout.setVerticalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 934, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Reportes", panel3);
 
         panel4.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -939,8 +923,7 @@ public class pantallaPrincipal extends javax.swing.JFrame {
         JColorChooser _jc = new JColorChooser();
         Color _cl = _jc.showDialog(this, "Selecciona un color", Color.BLACK);
         panel1.setBackground(_cl);
-        panel2.setBackground(_cl);
-        panel3.setBackground(_cl);
+        panel2.setBackground(_cl);        
         panel4.setBackground(_cl);
         panel5.setBackground(_cl);
         panel6.setBackground(_cl);
@@ -1046,7 +1029,6 @@ public class pantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagen;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
-    private javax.swing.JPanel panel3;
     private javax.swing.JPanel panel4;
     private javax.swing.JPanel panel5;
     private javax.swing.JPanel panel6;

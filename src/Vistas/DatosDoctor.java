@@ -5,6 +5,11 @@
  */
 package Vistas;
 
+import Conexiones.Conexion;
+import Procedimientos.mostrarDoc;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author mendo
@@ -15,8 +20,8 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
      * Creates new form DatosDoctor
      */
     public DatosDoctor() {
-        initComponents();
-    }
+        initComponents();        
+    }      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,6 +46,7 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
+        lblNombreDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombreDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/if_doctor_63121.png"))); // NOI18N
         lblNombreDoc.setDescription("Nombre");
 
@@ -68,17 +74,15 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
         panelShadow1Layout.setHorizontalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelShadow1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(btnVerHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelShadow1Layout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
-                .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefonoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCedulaDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(176, 176, 176))
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnVerHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblNombreDoc, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                        .addComponent(lblCedulaDoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTelefonoDoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblHospital, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         panelShadow1Layout.setVerticalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +95,9 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
                 .addComponent(lblTelefonoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnVerHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         panelCurves1.add(panelShadow1, java.awt.BorderLayout.CENTER);
@@ -104,7 +108,7 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelCurves1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                .addComponent(panelCurves1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,21 +134,36 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerHospitalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerHospitalActionPerformed
-        DatosHospital DH = new DatosHospital();
-        Secretaria.desktop1.add(DH);
+        DatosHospital DH = new DatosHospital();        
+        mostrarDoc _dts = new mostrarDoc();
+        Conexion _con = new Conexion();
+        
+        String selec = Secretaria.cbDoctorDis.getSelectedItem().toString();
+        
+        ArrayList<String> lista = new ArrayList<String>();
+        
+        _dts.setDoc(selec);
+        
+        lista = _con.mosDoctor(_dts);                        
+        
+        DH.lblNombreHos.setText(lista.get(3));
+        DH.lblCiudadHos.setText(lista.get(4));
+        DH.lblEstadoHos.setText(lista.get(5));
+        DH.lblTelefonoHos.setText(lista.get(6));
+        
+        Secretaria.desktop1.add(DH);                
         DH.toFront();
-        DH.setVisible(true);
-
+        DH.setVisible(true);        
     }//GEN-LAST:event_btnVerHospitalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonAction btnVerHospital;
     private javax.swing.JPanel jPanel1;
-    private org.edisoncor.gui.label.LabelTask lblCedulaDoc;
-    private org.edisoncor.gui.label.LabelTask lblHospital;
-    private org.edisoncor.gui.label.LabelTask lblNombreDoc;
-    private org.edisoncor.gui.label.LabelTask lblTelefonoDoc;
+    public static org.edisoncor.gui.label.LabelTask lblCedulaDoc;
+    public static org.edisoncor.gui.label.LabelTask lblHospital;
+    public static org.edisoncor.gui.label.LabelTask lblNombreDoc;
+    public static org.edisoncor.gui.label.LabelTask lblTelefonoDoc;
     private org.edisoncor.gui.panel.PanelCurves panelCurves1;
     private org.edisoncor.gui.panel.PanelShadow panelShadow1;
     // End of variables declaration//GEN-END:variables
