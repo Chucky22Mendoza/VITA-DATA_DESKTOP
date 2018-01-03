@@ -6,6 +6,8 @@
 package Conexiones;
 
 import Procedimientos.ActualizarDoctor;
+import Procedimientos.ActualizarPaciente;
+import Procedimientos.ActualizarReceptor;
 import Procedimientos.BorrarDoctor;
 import Procedimientos.BorrarHospital;
 import Procedimientos.BusquedaDoctor;
@@ -13,8 +15,10 @@ import Procedimientos.BusquedaHospital;
 import Procedimientos.CambioDoctor;
 import Procedimientos.GuardarDoctor;
 import Procedimientos.GuardarHospital;
+import Procedimientos.GuardarPaciente;
 import Procedimientos.HistorialAtencion;
 import Procedimientos.RegistrarCita;
+import Procedimientos.idPaciente;
 import Procedimientos.mostrarDoc;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -53,6 +57,10 @@ public class Conexion {
         }     
         return _con ;        
     }
+    
+    
+//Inicia Vista Secretaria
+    
     //Inicia parte de Registro de Doctores
     public void insertarDoctor(GuardarDoctor dts){
         try{
@@ -75,6 +83,7 @@ public class Conexion {
         }
     }
     
+
     public void actualizarDoctor(ActualizarDoctor dts){
         try{
             _con = this.getConexion(_user, _pass);
@@ -642,6 +651,353 @@ public class Conexion {
             return null;
         }
     }
+    //Termina parte de Pacientes 
+    
+//Fin de Vista Secretaria
+    
+//------------------------------------------------------------------------------------------------------
+//Inicio de Vista de Doctor
+    
+    //Inicia parte de Pacientes
+    public void insertarPaciente(GuardarPaciente dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdRegistrarPaciente(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            
+            _csta.setString(1, dts.getNombre());
+            _csta.setInt(2, dts.getEdad());
+            _csta.setString(3, dts.getNacimiento());            
+            _csta.setFloat(4, dts.getPeso());
+            _csta.setFloat(5,dts.getEstatura());
+            _csta.setString(6, dts.getNomTutor());
+            _csta.setString(7, dts.getTel());
+            _csta.setString(8, dts.getAnt1());
+            _csta.setString(9, dts.getAnt2());
+            _csta.setString(10, dts.getAnt3());
+            _csta.setString(11, dts.getAnt4());
+            _csta.setString(12, dts.getFecOperacion());
+            _csta.setString(13, dts.getPadecimiento());
+            
+            _csta.executeUpdate();
+            
+            _con.close();
+            _rs.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+        
+    
+    public DefaultTableModel verPacientes2(){
+        DefaultTableModel _mod;
+        String [] titulos = {"Nombre", "Edad", "Fecha de Nacimiento","IMC"};
+        
+        String [] registro = new String [5];
+        
+        _mod = new DefaultTableModel(null,titulos);
+        
+        try {
+            _con = this.getConexion(_user, _pass);
+            
+            _sql = "Select _idPaciente, _nombre, _edad, _fechaNacimiento, _IMC from Paciente";
+            
+            _st = _con.createStatement();
+            _rs = _st.executeQuery(_sql);
+            
+            while(_rs.next()){
+                registro [0] = _rs.getString("_nombre");
+                registro [1] = _rs.getString("_edad");
+                registro [2] = _rs.getString("_fechaNacimiento");
+                registro [3] = _rs.getString("_IMC");                                
+                registro [4] = _rs.getString("_idPaciente");                                
+                
+                _mod.addRow(registro);
+            }
+            _con.close();
+            _rs.close();
+            return _mod;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    
+    
+    public void actualizarPaciente(ActualizarPaciente dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdActualizarPaciente(?,?,?,?,?,?)}");
+            
+            _csta.setInt(1, dts.getId());
+            _csta.setString(2, dts.getNombre());
+            _csta.setInt(3, dts.getEdad());
+            _csta.setString(4, dts.getFec());            
+            _csta.setFloat(5, dts.getPeso());
+            _csta.setFloat(6, dts.getEstatura());
+            
+            
+            _csta.executeUpdate();
+            
+            _con.close();
+            _rs.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    public void borraPaciente1(idPaciente dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta = _con.prepareCall("{call procdBorrarPac1(?)}");
+            
+            _csta.setInt(1, dts.getIdPac());                             
+            
+           int _res = _csta.executeUpdate();
+            System.out.println(_res);
+            JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
+            _con.close();
+            _rs.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "El Paciente ya está Inactivo", "Error",2);         
+        } 
+    }
+    
+    public void borrarPaciente2(idPaciente dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta = _con.prepareCall("{call procdBorrarPac2(?)}");
+            
+            _csta.setInt(1, dts.getIdPac());                                                      
+            
+            int _res = _csta.executeUpdate();
+            System.out.println(_res);
+            JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
+            _con.close();
+            _rs.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "El Paciente ya está Activo", "Error",2);     
+        } 
+    }
     //Termina parte de Pacientes
+    
+    //Inicia parte de Información de Paciente
+    public ArrayList<String> mostrarReceptor(idPaciente dts){
+        ArrayList <String> registro  = new ArrayList<String>();
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdMostrarReceptor(?)}");
+
+            _csta.setInt(1, dts.getIdPac());                        
+            
+            _rs = _csta.executeQuery();          
+            
+            while(_rs.next()){
+                registro.add(0,_rs.getString("_nombre")); 
+                registro.add(1, _rs.getString("_numTelefono"));                              
+            }
+            
+            _con.close();
+            _rs.close();                        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return registro;
+    }
+    
+    public void actReceptor(ActualizarReceptor dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta = _con.prepareCall("{call procdActualizarReceptor(?,?,?)}");
+            
+            _csta.setInt(1, dts.getIdPac());                             
+            _csta.setString(2, dts.getNombre());            
+            _csta.setString(3, dts.getTel());
+            
+           int _res = _csta.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
+            
+            _con.close();
+            _rs.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se pudo Actualizar", "Error",2);         
+        } 
+    }
+    
+    public ArrayList<String> mostrarDoc(idPaciente dts){
+        ArrayList <String> registro  = new ArrayList<String>();
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdMostrarDoctor(?)}");
+
+            _csta.setInt(1, dts.getIdPac());                        
+            
+            _rs = _csta.executeQuery();          
+            
+            while(_rs.next()){
+                registro.add(0,_rs.getString("Doctor")); 
+                registro.add(1, _rs.getString("_telefono"));                              
+                registro.add(2, _rs.getString("_usuario"));  
+                registro.add(3, _rs.getString("_nombre"));  
+            }
+            
+            _con.close();
+            _rs.close();                        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return registro;
+    }
+    
+    public ArrayList<String> mostrarAnt(idPaciente dts){
+        ArrayList <String> registro  = new ArrayList<String>();
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdMostrarAntecedentes(?)}");
+
+            _csta.setInt(1, dts.getIdPac());                        
+            
+            _rs = _csta.executeQuery();          
+            
+            while(_rs.next()){
+                registro.add(0,_rs.getString("_persPatologicos")); 
+                registro.add(1, _rs.getString("_familiares"));                              
+                registro.add(2, _rs.getString("_noPatologicos"));  
+                registro.add(3, _rs.getString("_tipoOperacion"));  
+                registro.add(4, _rs.getString("_fechaOperacion"));  
+            }
+            
+            _con.close();
+            _rs.close();                        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return registro;
+    }
+    
+    public ArrayList<String> mostrarPulsera(idPaciente dts){
+        ArrayList <String> registro  = new ArrayList<String>();
+        try{
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdPulseraPac(?)}");
+
+            _csta.setInt(1, dts.getIdPac());                        
+            
+            _rs = _csta.executeQuery();          
+            
+            while(_rs.next()){
+                registro.add(0,_rs.getString("Numero de Serie")); 
+            }
+            
+            _con.close();
+            _rs.close();                        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return registro;
+    }    
+    //Termina parte de Información de Paciente
+    
+    //Inicia parte de Monitoreo de Paciente
+    public DefaultTableModel verMonitoreo(){
+        DefaultTableModel _mod;
+        String [] titulos = {"Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora"};
+        
+        String [] registro = new String [4];
+        
+        _mod = new DefaultTableModel(null,titulos);
+        
+        try {
+            _con = this.getConexion(_user, _pass);
+            
+            _sql = "Select _temperatura, _oxgenoSangre, _frecuenciaCardiaca, _fechaHora from Datos";
+            
+            _st = _con.createStatement();
+            _rs = _st.executeQuery(_sql);
+            
+            while(_rs.next()){
+                registro [0] = _rs.getString("_temperatura");
+                registro [1] = _rs.getString("_oxigenoSangre");
+                registro [2] = _rs.getString("_frecuenciaCardiaca");
+                registro [3] = _rs.getString("_fechaHora");                                                
+                
+                _mod.addRow(registro);
+            }
+            _con.close();
+            _rs.close();
+            return _mod;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    
+    public DefaultTableModel BuscarMonitoreo(idPaciente dts){
+        DefaultTableModel _mod;
+        String [] titulos = {"Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora"};
+        
+        String [] registro = new String [4];
+        
+        _mod = new DefaultTableModel(null,titulos);
+        
+        try {
+            _con = this.getConexion(_user, _pass);
+            CallableStatement _csta=_con.prepareCall("{call procdMostrarDatos(?)}");
+
+            _csta.setInt(1, dts.getIdPac());                        
+            
+            _rs = _csta.executeQuery();  
+            
+            while(_rs.next()){
+                registro [0] = _rs.getString("_temperatura");
+                registro [1] = _rs.getString("_oxigenoSangre");
+                registro [2] = _rs.getString("_frecuenciaCardiaca");
+                registro [3] = _rs.getString("_fechaHora");                                                
+                
+                _mod.addRow(registro);
+            }
+            _con.close();
+            _rs.close();
+            return _mod;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    //Termina parte de Monitoreo de Paciente
+    
+    //Inicia parte de Historial de Atención
+    public DefaultTableModel mosHistorial(){
+        DefaultTableModel _mod;
+        String [] titulos = {"Paciente", "Doctor", "Fecha de atención"};
+        
+        String [] registro = new String [3];
+        
+        _mod = new DefaultTableModel(null,titulos);
+        
+        try {
+            _con = this.getConexion(_user, _pass);
+            _sql = "Select * from HistorialAtencion";
+
+            _st = _con.createStatement();
+            _rs = _st.executeQuery(_sql);
+            
+            while(_rs.next()){
+                registro [0] = _rs.getString("Paciente");
+                registro [1] = _rs.getString("Doctor");
+                registro [2] = _rs.getString("FechaAtencion");                
+                
+                _mod.addRow(registro);
+            }
+            _con.close();
+            _rs.close();
+            return _mod;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    //Termina parte de Historial de Atención
+//Fin de Vista Doctor
     }
 
