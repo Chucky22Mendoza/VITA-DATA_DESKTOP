@@ -6,6 +6,7 @@
 package Vistas;
 
 import Conexiones.Conexion;
+import Procedimientos.Login;
 import com.sun.awt.AWTUtilities;
 import java.awt.HeadlessException;
 import java.awt.MouseInfo;
@@ -307,19 +308,38 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Conexion conect = new Conexion();
-
+        Login dts = new Login();
+        
         String _user = txtUser.getText();
         String _pass = txtPassword.getText();
-
+        
+        dts.setUser(_user);
+        dts.setPass(_pass);
+        
         if (_user.isEmpty() || _pass.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos", "Campos requeridos", 2);
         } else {
             try {
                 conect.getConexion(_user, _pass);
-                JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
-                Secretaria  _sec = new Secretaria();
-                _sec.setVisible(true);
-                this.dispose();                
+                int _doc = conect.conectarUsuario(dts);
+                
+                
+                    if(_user.equals("AdmonVD") && _pass.equals("datavita2018colima")){
+                            JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
+                            Secretaria  _sec = new Secretaria();
+                            _sec.setVisible(true);
+                            this.dispose();           
+                    }else{
+                        if(_doc == 1){
+                                JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
+                                Doctor Doc = new Doctor();
+                                Doc.setVisible(true);
+                                this.dispose();           
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
+                        }                        
+                    }
+                                               
             }catch(HeadlessException e){
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
             }

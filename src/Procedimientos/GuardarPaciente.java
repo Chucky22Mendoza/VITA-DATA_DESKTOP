@@ -17,17 +17,12 @@ public class GuardarPaciente {
     private String _nacimiento;
     private String _nomTutor;
     private String _tel;
-    private String _padecimiento;
-    private String _ant1;
-    private String _ant2;
-    private String _ant3;
-    private String _ant4;
-    private String _fecOperacion;
+    private String _padecimiento;        
 
     public GuardarPaciente() {
     }
 
-    public GuardarPaciente(String _nombre, int _edad, float _peso, float _estatura, String _nacimiento, String _nomTutor, String _tel, String _padecimiento, String _ant1, String _ant2, String _ant3, String _ant4, String _fecOperacion) {
+    public GuardarPaciente(String _nombre, int _edad, float _peso, float _estatura, String _nacimiento, String _nomTutor, String _tel, String _padecimiento) {
         this._nombre = _nombre;
         this._edad = _edad;
         this._peso = _peso;
@@ -35,12 +30,7 @@ public class GuardarPaciente {
         this._nacimiento = _nacimiento;
         this._nomTutor = _nomTutor;
         this._tel = _tel;
-        this._padecimiento = _padecimiento;
-        this._ant1 = _ant1;
-        this._ant2 = _ant2;
-        this._ant3 = _ant3;
-        this._ant4 = _ant4;
-        this._fecOperacion = _fecOperacion;
+        this._padecimiento = _padecimiento;        
     }
 
     public String getNombre() {
@@ -105,47 +95,5 @@ public class GuardarPaciente {
 
     public void setPadecimiento(String _padecimiento) {
         this._padecimiento = _padecimiento;
-    }
-
-    public String getAnt1() {
-        return _ant1;
-    }
-
-    public void setAnt1(String _ant1) {
-        this._ant1 = _ant1;
-    }
-
-    public String getAnt2() {
-        return _ant2;
-    }
-
-    public void setAnt2(String _ant2) {
-        this._ant2 = _ant2;
-    }
-
-    public String getAnt3() {
-        return _ant3;
-    }
-
-    public void setAnt3(String _ant3) {
-        this._ant3 = _ant3;
-    }
-
-    public String getAnt4() {
-        return _ant4;
-    }
-
-    public void setAnt4(String _ant4) {
-        this._ant4 = _ant4;
-    }
-
-    public String getFecOperacion() {
-        return _fecOperacion;
-    }
-
-    public void setFecOperacion(String _fecOperacion) {
-        this._fecOperacion = _fecOperacion;
-    }
-    
-    
+    }    
 }

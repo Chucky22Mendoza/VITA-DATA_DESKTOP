@@ -1919,6 +1919,7 @@ public class Secretaria extends javax.swing.JFrame {
                 "Paciente", "Edad", "Fecha de Nacimiento", "Doctor", "Receptor", "Numero de Pulsera"
             }
         ));
+        pacTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pacTable.setGridColor(new java.awt.Color(0, 0, 0));
         pacTable.setRowHeight(30);
         pacTable.setSelectionBackground(new java.awt.Color(0, 102, 204));
@@ -2390,8 +2391,7 @@ public class Secretaria extends javax.swing.JFrame {
     private void btnVerDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDoctorActionPerformed
         DatosDoctor DD = new DatosDoctor();        
         mostrarDoc _dts = new mostrarDoc();
-        Conexion _con = new Conexion();
-        DatosHospital DH = new DatosHospital();
+        Conexion _con = new Conexion();        
         
         String selec = cbDoctorDis.getSelectedItem().toString();        
         
