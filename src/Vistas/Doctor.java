@@ -2766,7 +2766,7 @@ public class Doctor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActInaActionPerformed
 
     private void btnPaciente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaciente3ActionPerformed
-        String link = "http://localhost/Vita-Data_INDAJO/chat.html";
+        String link = "https://app-1501208568.000webhostapp.com/";
         
         try {
             Desktop.getDesktop().browse(new URI(link));

@@ -10,7 +10,7 @@ public class conexionDB {
     private String _user = "root";
     private String _pass = "";
     private String _host = "localhost";
-    private String _nombreDB = "vita-data";
+    private String _nombreDB = "login";
     
     public Connection conexion(){
         try{

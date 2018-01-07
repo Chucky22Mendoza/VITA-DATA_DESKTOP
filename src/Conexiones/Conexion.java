@@ -30,9 +30,7 @@ import Procedimientos.Paciente;
 import Procedimientos.Padecimiento;
 import Procedimientos.RegistrarCita;
 import Procedimientos.idPaciente;
-import Procedimientos.mosPacientes;
 import Procedimientos.mostrarDoc;
-import Vistas.Doctor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -44,7 +42,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
-import org.apache.poi.hssf.record.chart.DefaultDataLabelTextPropertiesRecord;
 
 /**
  *

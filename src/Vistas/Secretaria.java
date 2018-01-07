@@ -5,7 +5,7 @@
  */
 package Vistas;
 
-import Conexiones.Conexion;
+import Conexiones.*;
 import Procedimientos.ActualizarDoctor;
 import Procedimientos.BorrarDoctor;
 import Procedimientos.BorrarHospital;
@@ -13,11 +13,13 @@ import Procedimientos.BusquedaDoctor;
 import Procedimientos.BusquedaHospital;
 import Procedimientos.CambioDoctor;
 import Procedimientos.GuardarDoctor;
+import Procedimientos.GuardarDoctorMysql;
 import Procedimientos.GuardarHospital;
 import Procedimientos.HistorialAtencion;
 import Procedimientos.RegistrarCita;
 import Procedimientos.mostrarDoc;
 import com.sun.awt.AWTUtilities;
+import conexiones.conexionDB;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
@@ -2417,7 +2419,9 @@ public class Secretaria extends javax.swing.JFrame {
 
     private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
         GuardarDoctor dts = new GuardarDoctor();
+        GuardarDoctorMysql dts2 = new GuardarDoctorMysql();
         Conexion _con = new Conexion();
+        conexionDB _cn = new conexionDB();
         
         int limite = 7;
         int lc = txtCedula.getText().length();
@@ -2436,12 +2440,17 @@ public class Secretaria extends javax.swing.JFrame {
         String _pass = txtContraseña1.getText();
         String _cPass = txtConfContraseña1.getText();
         
-        dts.setCed(_ced);
-        dts.setNombre(_nom);
+        dts.setCed(_ced);        
+        dts.setNombre(_nom);        
         dts.setTelefono(_tel);
         dts.setHospital(_hos);
-        dts.setUsuario(_user);
+        dts.setUsuario(_user);        
         dts.setContraseña(_pass);
+        
+        dts2.setNombre(_nom);
+        dts2.setCed(_ced);
+        dts2.setUsuario(_user);
+        dts2.setContraseña(_pass);
         
         if(_ced.isEmpty() || _nom.isEmpty() || _tel1.isEmpty() || _tel2.isEmpty() || _tel3.isEmpty() || _tel4.isEmpty() || _hos.isEmpty() || _user.isEmpty() || _pass.isEmpty()){
             JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos", "Campos requeridos", 2);
@@ -2450,6 +2459,7 @@ public class Secretaria extends javax.swing.JFrame {
                 if(limite == lc){
                     if(lp >= limite2){
                         _con.insertarDoctor(dts);
+                        _cn.insertarDoctor(dts2);
                         JOptionPane.showMessageDialog(null, "Se ha registrado correctamente", "Completado",1);
                         limpiar1();
                         bloquear1();
