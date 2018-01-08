@@ -1258,6 +1258,8 @@ public class Conexion {
             return null;
         }
     }
+    
+    
     //Termina parte de Monitoreo de Paciente
     
     //Inicia parte de Historial de Atención

@@ -323,8 +323,8 @@ public class LogIn extends javax.swing.JFrame {
                 conect.getConexion(_user, _pass);
                 int _doc = conect.conectarUsuario(dts);
                 
-                if(_user.equals("sa") && _pass.equals("1234")){
-                    //if(_user.equals("AdmonVD") && _pass.equals("datavita2018colima")){
+                
+                    if(_user.equals("AdmonVD") && _pass.equals("datavita2018colima")){
                             JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
                             Secretaria  _sec = new Secretaria();
                             _sec.setVisible(true);
