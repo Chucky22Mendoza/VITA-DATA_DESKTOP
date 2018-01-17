@@ -23,10 +23,21 @@ public class conexionDB {
             e.printStackTrace();
             return _cn;
         }        
-    }
+    }    
     
     Statement createStatement(){
         throw new UnsupportedOperationException("No soportado");
+    }
+    
+    public Connection closeConexion(){
+        try {
+            _cn = this.conexion();
+            _cn.close();
+            _st.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
     
     public void insertarDoctor(GuardarDoctorMysql dts2){

@@ -88,6 +88,17 @@ public class Conexion {
             }                
     }
     
+    public Connection closeConexion(){
+        try {
+            _con = this.getConexion(_user, _pass);
+            _con.close();
+            _rs.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     
 //Inicia Vista Secretaria
     
