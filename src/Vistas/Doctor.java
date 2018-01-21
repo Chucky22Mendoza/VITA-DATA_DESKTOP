@@ -23,12 +23,17 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.print.PrinterException;
 import java.net.URI;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -48,6 +53,10 @@ public class Doctor extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         Shape _form = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 27, 27);
         AWTUtilities.setWindowShape(this, _form);
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
+        } catch (Exception e) {
+        }
         Conexion _con = new Conexion();        
         Paciente _pac = new Paciente();
         cbPadecimiento.setModel(_con.getvalues5());        
@@ -93,12 +102,14 @@ public class Doctor extends javax.swing.JFrame {
         cbPaciente1.setEnabled(false);
         btnPaciente1.setEnabled(false);
         btnCancelar4.setEnabled(true);
+        btnImprimir2.setEnabled(true);
     }
     
     void iniciarInfo(){
         cbPaciente1.setEnabled(true);        
         btnPaciente1.setEnabled(true);
         btnCancelar4.setEnabled(false);
+        btnImprimir2.setEnabled(false);
     }
     
     void bloquearInfo(){
@@ -488,6 +499,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel41 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
+        btnImprimir1 = new org.edisoncor.gui.button.ButtonRound();
         jPanel6 = new javax.swing.JPanel();
         cbPaciente1 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
@@ -552,6 +564,7 @@ public class Doctor extends javax.swing.JFrame {
         btnPaciente3 = new org.edisoncor.gui.button.ButtonRound();
         btnCancelar4 = new org.edisoncor.gui.button.ButtonRound();
         btnMostrarMQ = new org.edisoncor.gui.button.ButtonRound();
+        btnImprimir2 = new org.edisoncor.gui.button.ButtonRound();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tableMonitoreo = new javax.swing.JTable();
@@ -578,6 +591,7 @@ public class Doctor extends javax.swing.JFrame {
         buttonRound22 = new org.edisoncor.gui.button.ButtonRound();
         buttonRound23 = new org.edisoncor.gui.button.ButtonRound();
         jLabel46 = new javax.swing.JLabel();
+        btnImprimir3 = new org.edisoncor.gui.button.ButtonRound();
 
         jMenu1.setText("jMenu1");
 
@@ -952,6 +966,14 @@ public class Doctor extends javax.swing.JFrame {
         jLabel45.setForeground(new java.awt.Color(0, 102, 102));
         jLabel45.setText("Tipo de búsqueda:");
 
+        btnImprimir1.setBackground(new java.awt.Color(51, 153, 255));
+        btnImprimir1.setText("IMPRIMIR");
+        btnImprimir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimir1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1043,16 +1065,16 @@ public class Doctor extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(btnActIna, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btnActIna, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnImprimir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(11, 11, 11)
                                         .addComponent(btnMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1134,7 +1156,8 @@ public class Doctor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(btnAntecedentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnAntecedentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimir1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
@@ -1505,6 +1528,14 @@ public class Doctor extends javax.swing.JFrame {
             }
         });
 
+        btnImprimir2.setBackground(new java.awt.Color(51, 153, 255));
+        btnImprimir2.setText("REPORTE");
+        btnImprimir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimir2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -1562,19 +1593,19 @@ public class Doctor extends javax.swing.JFrame {
                                                                         .addComponent(cbMQ, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                         .addComponent(calOperacion, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))))))))
                                             .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 934, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGap(0, 76, Short.MAX_VALUE))
                                     .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addGap(481, 481, 481)
+                                        .addGap(410, 410, 410)
                                         .addComponent(jLabel16)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblPulsera)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(26, 26, 26)
                                         .addComponent(clockDigital3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addGap(73, 73, 73)
                                         .addComponent(panelImage5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(65, 65, 65)
+                                        .addGap(58, 58, 58)
                                         .addComponent(btnPadecimiento2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(333, 333, 333))))
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel23)
@@ -1598,11 +1629,14 @@ public class Doctor extends javax.swing.JFrame {
                                         .addComponent(txtTelD4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel6Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnPaciente3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnImprimir2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnPaciente3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
@@ -1723,16 +1757,17 @@ public class Doctor extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(61, 61, 61)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel16)
-                                        .addComponent(lblPulsera))
-                                    .addComponent(clockDigital3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel16)
+                                    .addComponent(lblPulsera)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(clockDigital3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(panelImage5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
+                                .addGap(49, 49, 49)
                                 .addComponent(btnPadecimiento2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -1786,7 +1821,9 @@ public class Doctor extends javax.swing.JFrame {
                             .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel25))
                         .addGap(18, 18, 18)
-                        .addComponent(btnPaciente3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnPaciente3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimir2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -1900,13 +1937,10 @@ public class Doctor extends javax.swing.JFrame {
                         .addComponent(jScrollPane5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel7Layout.createSequentialGroup()
-                                        .addGap(102, 102, 102)
-                                        .addComponent(btnBuscar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(89, 89, 89))
+                                .addGap(102, 102, 102)
+                                .addComponent(btnBuscar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(92, 92, 92)
                                 .addComponent(panelImage6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1955,7 +1989,7 @@ public class Doctor extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedSelector21, javax.swing.GroupLayout.PREFERRED_SIZE, 1671, Short.MAX_VALUE)
+                .addComponent(tabbedSelector21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -2067,6 +2101,14 @@ public class Doctor extends javax.swing.JFrame {
         jLabel46.setForeground(new java.awt.Color(0, 102, 102));
         jLabel46.setText("Paciente:");
 
+        btnImprimir3.setBackground(new java.awt.Color(51, 153, 255));
+        btnImprimir3.setText("IMPRIMIR");
+        btnImprimir3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimir3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -2084,6 +2126,8 @@ public class Doctor extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                         .addComponent(buttonRound22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnImprimir3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(46, 46, 46)
                                         .addComponent(buttonRound23, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                         .addComponent(calMes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2146,8 +2190,9 @@ public class Doctor extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonRound23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonRound22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(159, Short.MAX_VALUE))
+                            .addComponent(buttonRound22, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimir3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         tabbedPaneHeader1.addTab("Historial", jPanel4);
@@ -3193,6 +3238,66 @@ public class Doctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbPaciente1ActionPerformed
 
+    private void btnImprimir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimir1ActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Control de Pacientes"); //encabezado
+            MessageFormat footer = new MessageFormat("VITA-DATA 2018");
+            tablePaciente.print(JTable.PrintMode.FIT_WIDTH, header, footer); //imprime jtable
+        } catch (PrinterException e) {
+            Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btnImprimir1ActionPerformed
+
+    public static String _pd;
+    
+    private void btnImprimir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimir2ActionPerformed
+        Imprimir imp = new Imprimir();
+        imp.setVisible(true);
+        idPaciente dts = new idPaciente();
+        Conexion _con = new Conexion();
+         Padecimientos _pad = new Padecimientos();
+         
+        int _pac = cbPaciente1.getItemAt(cbPaciente1.getSelectedIndex()).getId();         
+        
+        dts.setIdPac(_pac);
+         
+        ArrayList<String> listaAnt = new ArrayList<String>();
+        listaAnt = _con.mostrarAnt(dts);
+        
+        String telT = txtTelT1.getText() + "-" + txtTelT2.getText() + "-" + txtTelT3.getText() + "-" + txtTelT4.getText();
+        String telD = txtTelD1.getText() + "-" + txtTelD2.getText() + "-" + txtTelD3.getText() + "-" + txtTelD4.getText();
+        
+        String titulo = "Paciente: " + cbPaciente1.getSelectedItem().toString() + "\n\nPulsera: " + lblPulsera.getText();         
+        
+        int _fila = _pad.tablePadecimientos.getRowCount();                         
+        _pd = "            " + _pad.tablePadecimientos.getValueAt(0, 0).toString() + "\n";                  
+        
+        for (int i = 1; i < _fila; i++ ){            
+             String pd = "            " + _pad.tablePadecimientos.getValueAt(i, 0).toString() + "\n";  
+             _pd =_pd+ pd;                         
+        }
+        
+        String info = "\n<<Datos del Tutor>> \n\n" + "Nombre: " + txtNombre3.getText() +"\n" + "Teléfono: " + telT + "\n\n"+ "<<Datos del Doctor>> \n\n" + 
+                    "Nombre: " + txtNombre4.getText()+ "\n" + "Teléfono: " + telD + "\n"+ "Hospital: " + txtHospital.getText() + "\n" + "Usuario: " + txtUsuario.getText() + "\n\n" +
+                    "<<Antecedentes>> \n\n"+ "Personales Patológicos: " + txtAnt1.getText() + "\n" + "No Patológicos: " + txtAnt2.getText() + "\n" + "Familiares: " + txtAnt3.getText() +
+                    "\n" + "Medico Quirúrgico: " +  "\n\n" + "            Tipo de Operación: " + listaAnt.get(3) + "\n" + "            Fecha: " + listaAnt.get(4)
+                    + "\n\n <<Padecimientos>> \n\n" + _pd;        
+        
+        imp._titulo = titulo;
+        imp._info = info;        
+    }//GEN-LAST:event_btnImprimir2ActionPerformed
+
+    private void btnImprimir3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimir3ActionPerformed
+        try {            
+            MessageFormat header = new MessageFormat("Historial de citas"); //encabezado
+            MessageFormat footer = new MessageFormat("VITA-DATA 2018");            
+            
+            hisTable.print(JTable.PrintMode.FIT_WIDTH, header, footer); //imprime jtable
+        } catch (PrinterException e) {
+            Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btnImprimir3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3243,6 +3348,9 @@ public class Doctor extends javax.swing.JFrame {
     private org.edisoncor.gui.button.ButtonRound btnCompletado2;
     private org.edisoncor.gui.button.ButtonRound btnEditar1;
     private org.edisoncor.gui.button.ButtonRound btnGuardar;
+    private org.edisoncor.gui.button.ButtonRound btnImprimir1;
+    private org.edisoncor.gui.button.ButtonRound btnImprimir2;
+    private org.edisoncor.gui.button.ButtonRound btnImprimir3;
     private org.edisoncor.gui.button.ButtonRound btnModificar;
     private org.edisoncor.gui.button.ButtonRound btnMostrar;
     private org.edisoncor.gui.button.ButtonRound btnMostrarMQ;

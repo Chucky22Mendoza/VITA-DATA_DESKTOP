@@ -13,6 +13,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,6 +37,10 @@ public class Padecimientos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         Shape _form = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 27, 27);
         AWTUtilities.setWindowShape(this, _form);
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
+        } catch (Exception e) {
+        }
         Conexion _con = new Conexion();
         cbPadecimiento.setModel(_con.getvalues5());   
         bloquear();        
@@ -402,6 +407,6 @@ public class Padecimientos extends javax.swing.JFrame {
     public static javax.swing.JComboBox<String> cbPadecimiento;
     private javax.swing.JScrollPane jScrollPane1;
     private org.edisoncor.gui.panel.PanelTranslucido panelTranslucido1;
-    private javax.swing.JTable tablePadecimientos;
+    public static javax.swing.JTable tablePadecimientos;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,10 +5,6 @@
  */
 package Vistas;
 
-import Conexiones.Conexion;
-import Procedimientos.mostrarDoc;
-import java.util.ArrayList;
-
 /**
  *
  * @author mendo
@@ -19,7 +15,7 @@ public class DatosHospital extends javax.swing.JInternalFrame {
      * Creates new form DatosHospital
      */
     public DatosHospital() {
-        initComponents();        
+        initComponents();                
     }
 
     /**

@@ -8,7 +8,6 @@ package Vistas;
 import Conexiones.Conexion;
 import Procedimientos.mostrarDoc;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -21,6 +20,7 @@ public class DatosDoctor extends javax.swing.JInternalFrame {
      */
     public DatosDoctor() {
         initComponents();        
+        
     }      
 
     /**

@@ -8,13 +8,13 @@ package Vistas;
 import Conexiones.Conexion;
 import Procedimientos.Antecedentes;
 import Procedimientos.DetalleMedQui;
-import static Vistas.Doctor.cbPadecimiento;
 import com.sun.awt.AWTUtilities;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +34,10 @@ public class AntecedentesPac extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         Shape _form = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 27, 27);
         AWTUtilities.setWindowShape(this, _form);
+        try {
+            setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
+        } catch (Exception e) {
+        }
         Conexion _con = new Conexion();        
         cbMQ.setModel(_con.getvalues7());   
     }
