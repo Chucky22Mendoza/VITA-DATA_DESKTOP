@@ -51,7 +51,7 @@ public class Conexion {
     static Connection _con; //Variable para conectar tipo connection
     public String _driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // driver de Sql Server
     public String _url = "jdbc:sqlserver://localhost:14330;databaseName=VITADATA";    //url para conectar a la DB local
-    static ResultSet _rs;
+    static ResultSet _rs, _rs2;
     static PreparedStatement _ps;    
     static Statement _st;
     static String _user, _pass, _sql;
@@ -71,17 +71,19 @@ public class Conexion {
     public int conectarUsuario(Login dts){
         try{
             _con = this.getConexion(_user, _pass);
-            _sql = "Select _usuario, _contraseña "
-                    + "from Doctor "
-                    + "where _usuario = '" + dts.getUser() + "' and _contraseña = '" + dts.getPass() + "'";
+            _sql = "Select * from Doctor where _usuario = '" + dts.getUser() + "' "
+                    + "and _contraseña = '" + dts.getPass() + "' "
+                    + "and _estado = 'Activo' ";
+            
             
             _st = _con.createStatement();
             _rs = _st.executeQuery(_sql);                        
-            
+                                    
             _con.close();
-            _rs.close();
-            return 1;
-            
+            _rs.close();            
+
+            return 1;            
+                        
             }catch (Exception e){
                     System.out.println(e);
                     return 0;

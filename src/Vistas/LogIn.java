@@ -6,15 +6,20 @@
 package Vistas;
 
 import Conexiones.Conexion;
+import Hilos.hiloBarra;
 import Procedimientos.Login;
 import com.sun.awt.AWTUtilities;
 import java.awt.HeadlessException;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -25,20 +30,45 @@ public class LogIn extends javax.swing.JFrame {
     /**
      * Creates new form LogIn
      */    
-    private int _x,_y; 
-    
+        
+            int _x,_y;
+            public int adm, doc;
     public LogIn() {
         this.setUndecorated(true);
         initComponents();
         this.setLocationRelativeTo(null);
         Shape _form = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 27, 27);
         AWTUtilities.setWindowShape(this, _form);
+        //barra.setVisible(false);
         try {
             setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
         } catch (Exception e) {
         }
     }
-
+    
+    protected void cargar(){
+        if(barra.getValue() == 100){
+            if (doc ==1){
+                
+                Doctor Doc = new Doctor();
+                Doc.setVisible(true);                
+                this.dispose();
+                JOptionPane.showMessageDialog(null, "BIENVENIDO","Completado" , 1);                            
+                
+                doc = 0;
+            }
+            if(adm==1){
+                
+                Secretaria  _sec = new Secretaria();
+                _sec.setVisible(true);                
+                this.dispose();
+                JOptionPane.showMessageDialog(null, "BIENVENIDO","Completado" , 1);                            
+                
+                adm = 0;
+            }
+        }
+    }
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,9 +90,10 @@ public class LogIn extends javax.swing.JFrame {
         panelImage5 = new org.edisoncor.gui.panel.PanelImage();
         txtPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnSesion = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        barra = new org.edisoncor.gui.progressBar.ProgressBarRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(66, 212, 194));
@@ -134,6 +165,11 @@ public class LogIn extends javax.swing.JFrame {
                 txtUserActionPerformed(evt);
             }
         });
+        txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUserKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelImage2Layout = new javax.swing.GroupLayout(panelImage2);
         panelImage2.setLayout(panelImage2Layout);
@@ -174,6 +210,11 @@ public class LogIn extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelImage3Layout = new javax.swing.GroupLayout(panelImage3);
         panelImage3.setLayout(panelImage3Layout);
@@ -201,15 +242,30 @@ public class LogIn extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("INICIO DE SESIÓN");
 
-        jButton2.setBackground(new java.awt.Color(0, 171, 191));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("LOGIN");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSesion.setBackground(new java.awt.Color(0, 171, 191));
+        btnSesion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnSesion.setText("LOGIN");
+        btnSesion.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        btnSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSesion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btnSesionFocusGained(evt);
+            }
+        });
+        btnSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSesionMouseClicked(evt);
+            }
+        });
+        btnSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSesionActionPerformed(evt);
+            }
+        });
+        btnSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSesionKeyPressed(evt);
             }
         });
 
@@ -220,13 +276,30 @@ public class LogIn extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("CONTRASEÑA:");
 
+        barra.setBackground(new java.awt.Color(66, 212, 194));
+        barra.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        barra.setForeground(new java.awt.Color(255, 51, 0));
+        barra.setBorde(0.0F);
+        barra.setBorderPainted(false);
+        barra.setColorDeBorde(new java.awt.Color(66, 212, 194));
+        barra.setColorDeSombra(new java.awt.Color(66, 212, 194));
+        barra.setDireccionDeSombra(0);
+        barra.setDistanciaDeSombra(0);
+        barra.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        barra.setStringPainted(true);
+        barra.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                barraStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(160, 160, 160)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,14 +313,15 @@ public class LogIn extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(76, 76, 76)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(jLabel4)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -265,8 +339,10 @@ public class LogIn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addComponent(btnSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -311,7 +387,7 @@ public class LogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionActionPerformed
         Conexion conect = new Conexion();
         Login dts = new Login();
         
@@ -329,17 +405,16 @@ public class LogIn extends javax.swing.JFrame {
                 int _doc = conect.conectarUsuario(dts);
                 
                 
-                    if(_user.equals("AdmonVD") && _pass.equals("datavita2018colima")){
-                            JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
-                            Secretaria  _sec = new Secretaria();
-                            _sec.setVisible(true);
-                            this.dispose();           
+                    if(_user.equals("AdmonVD") && _pass.equals("datavita2018colima")){                                                    
+                            adm = 1;
+                            hiloBarra bar = new hiloBarra();
+                            bar.start();                                                        
+                            
                     }else{
                         if(_doc == 1){
-                                JOptionPane.showMessageDialog(null, "Completado","Datos correctos" , 1);
-                                Doctor Doc = new Doctor();
-                                Doc.setVisible(true);
-                                this.dispose();           
+                            doc=1;
+                            hiloBarra bar = new hiloBarra();
+                            bar.start();          
                         }else{
                             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
                         }                        
@@ -349,7 +424,7 @@ public class LogIn extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSesionActionPerformed
 
     private void buttonIcon2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIcon2ActionPerformed
         this.setExtendedState(ICONIFIED);
@@ -368,6 +443,39 @@ public class LogIn extends javax.swing.JFrame {
         Point _p = MouseInfo.getPointerInfo().getLocation();
         this.setLocation(_p.x-_x,_p.y-_y);
     }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnSesion.doClick(100);
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_TAB){
+            btnSesion.requestFocus();
+        }
+    }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_TAB){
+            txtPassword.requestFocus();
+        }
+    }//GEN-LAST:event_txtUserKeyPressed
+
+    private void btnSesionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnSesionFocusGained
+        
+    }//GEN-LAST:event_btnSesionFocusGained
+
+    private void btnSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSesionMouseClicked
+        
+    }//GEN-LAST:event_btnSesionMouseClicked
+
+    private void btnSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSesionKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnSesion.doClick(100);
+        }
+    }//GEN-LAST:event_btnSesionKeyPressed
+
+    private void barraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_barraStateChanged
+        cargar();
+    }//GEN-LAST:event_barraStateChanged
 
     /**
      * @param args the command line arguments
@@ -406,9 +514,10 @@ public class LogIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static org.edisoncor.gui.progressBar.ProgressBarRound barra;
+    private javax.swing.JButton btnSesion;
     private org.edisoncor.gui.button.ButtonIcon buttonIcon1;
     private org.edisoncor.gui.button.ButtonIcon buttonIcon2;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

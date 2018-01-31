@@ -212,7 +212,7 @@ public class NuevoPad extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Favor de llenar el campo", "Error",2);         
         }else{
             _con.insertarPad(dts);                                        
-            this.dispose();            
+            this.dispose();       
         }                        
     }//GEN-LAST:event_btnAgregarActionPerformed
 

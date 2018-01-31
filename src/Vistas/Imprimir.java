@@ -5,17 +5,13 @@
  */
 package Vistas;
 
-import Conexiones.Conexion;
 import Conexiones.GenerarPDF;
-import Procedimientos.Login;
 import com.sun.awt.AWTUtilities;
-import java.awt.HeadlessException;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
-import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -214,7 +210,7 @@ public class Imprimir extends javax.swing.JFrame {
 //                if(_doc == 1){
                     pdf.generarPDF(_titulo, _info, "VITA-DATA 2018", "src/img/corazon.png", ruta+".pdf");       
                     JOptionPane.showMessageDialog(null, "Creación de archivo PDF realizado correctamente", "Archivo PDF", 1);
-                    this.dispose();                                
+                    this.dispose();
 //                }else{
 //                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
 //                }                                                                                           
@@ -227,7 +223,7 @@ public class Imprimir extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void buttonIcon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIcon1ActionPerformed
-            this.dispose();       
+            this.dispose();      
     }//GEN-LAST:event_buttonIcon1ActionPerformed
 
     private void buttonIcon2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIcon2ActionPerformed

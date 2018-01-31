@@ -184,7 +184,7 @@ public class NuevoMQ extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Favor de llenar el campo", "Error",2);         
         }else{
             _con.insertarOpe(dts);                                        
-            this.dispose();            
+            this.dispose();
         }       
     }//GEN-LAST:event_buttonRound1ActionPerformed
 

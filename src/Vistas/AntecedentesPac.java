@@ -332,7 +332,7 @@ public class AntecedentesPac extends javax.swing.JFrame {
             _con.insertarDetalle(DMQ);
             Doctor _doc = new Doctor();
             _doc.cbMQ.setModel(_con.getvalues7()); 
-            this.dispose();            
+            this.dispose();         
         }       
     }//GEN-LAST:event_buttonRound2ActionPerformed
 
