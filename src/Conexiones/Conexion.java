@@ -30,6 +30,7 @@ import Procedimientos.Paciente;
 import Procedimientos.Padecimiento;
 import Procedimientos.RegistrarCita;
 import Procedimientos.idPaciente;
+import Procedimientos.idPulsera;
 import Procedimientos.mostrarDoc;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -91,10 +92,9 @@ public class Conexion {
     }
     
     public Connection closeConexion(){
-        try {
-            _con = this.getConexion(_user, _pass);
+        try {                        
             _con.close();
-            _rs.close();
+            _rs.close();                        
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -473,8 +473,7 @@ public class Conexion {
             _csta.setString(7, dts.getEstado());
             
             
-            int _res = _csta.executeUpdate();
-            System.out.println(_res);
+            _csta.executeUpdate();            
             
             _con.close();
             _rs.close();
@@ -530,8 +529,7 @@ public class Conexion {
             _csta.setString(7, dts.getEstado());
             
             
-            int _res = _csta.executeUpdate();
-            System.out.println(_res);
+            _csta.executeUpdate();            
             
             _con.close();
             _rs.close();
@@ -548,7 +546,7 @@ public class Conexion {
             _csta.setString(1,dts.getNombre());
             
             int _res = _csta.executeUpdate();      
-            System.out.println(_res);
+            
             
             if (_res == -1){
                 JOptionPane.showMessageDialog(null, "Esta Institución aún cuenta con Doctores registrados", "Error", 2);
@@ -933,6 +931,28 @@ public class Conexion {
         }
     }
     
+    public String nom;
+    public String paciente(idPulsera dts){
+        try{
+            _con = this.getConexion(_user, _pass);
+            _sql = "select _nombre from Paciente where _idPulsera = " + dts.getIdPulsera();
+                        
+            _st = _con.createStatement();            
+            _rs = _st.executeQuery(_sql);
+            
+            while(_rs.next()){
+                nom = _rs.getString("_nombre");
+            }            
+            
+            _con.close();
+            _rs.close();
+            
+            return nom;                        
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }        
+    }
     
     public void actualizarPaciente(ActualizarPaciente dts){
         try{
@@ -963,8 +983,8 @@ public class Conexion {
             
             _csta.setInt(1, dts.getIdPac());                             
             
-            int _res = _csta.executeUpdate();
-            System.out.println(_res);
+            _csta.executeUpdate();
+            
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
             _con.close();
             _rs.close();
@@ -980,8 +1000,8 @@ public class Conexion {
             
             _csta.setInt(1, dts.getIdPac());                                                      
             
-            int _res = _csta.executeUpdate();
-            System.out.println(_res);
+            _csta.executeUpdate();
+            
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
             _con.close();
             _rs.close();
@@ -1082,7 +1102,7 @@ public class Conexion {
             _csta.setString(2, dts.getNombre());            
             _csta.setString(3, dts.getTel());
             
-           int _res = _csta.executeUpdate();
+           _csta.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
             
@@ -1176,7 +1196,7 @@ public class Conexion {
             _csta.setString(3, dts.getAnt2());
             _csta.setString(4, dts.getAnt3());
             
-           int _res = _csta.executeUpdate();
+           _csta.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                
             
@@ -1196,7 +1216,7 @@ public class Conexion {
             _csta.setString(2, dts.getOpe());            
             _csta.setString(3, dts.getFecha());            
             
-           int _res = _csta.executeUpdate();                        
+           _csta.executeUpdate();                        
             
             _con.close();
             _rs.close();
@@ -1209,24 +1229,27 @@ public class Conexion {
     //Inicia parte de Monitoreo de Paciente
     public DefaultTableModel verMonitoreo(){
         DefaultTableModel _mod;
-        String [] titulos = {"Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora"};
+        String [] titulos = {"Pulsera", "Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora", "Alerta"};
         
-        String [] registro = new String [4];
+        String [] registro = new String [6];
         
         _mod = new DefaultTableModel(null,titulos);
         
         try {
             _con = this.getConexion(_user, _pass);
             
-            CallableStatement _csta=_con.prepareCall("{call procdMonitoreo}");            
+            _sql = "select * from Datos";
             
-            _rs = _csta.executeQuery();  
+            _st = _con.createStatement();
+            _rs = _st.executeQuery(_sql);
             
             while(_rs.next()){
-                registro [0] = _rs.getString("_temperatura");
-                registro [1] = _rs.getString("_oxigenoSangre");
-                registro [2] = _rs.getString("_frecuenciaCardiaca");
-                registro [3] = _rs.getString("_fechaHora");                                                
+                registro [0] = _rs.getString("_idPulsera");
+                registro [1] = _rs.getString("_temperatura");
+                registro [2] = _rs.getString("_oxigenoSangre");
+                registro [3] = _rs.getString("_frecuenciaCardiaca");
+                registro [4] = _rs.getString("_fechaHora");                                                
+                registro [5] = _rs.getString("_estado");                                             
                 
                 _mod.addRow(registro);
             }
@@ -1241,9 +1264,9 @@ public class Conexion {
     
     public DefaultTableModel BuscarMonitoreo(idPaciente dts){
         DefaultTableModel _mod;
-        String [] titulos = {"Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora"};
+        String [] titulos = {"Pulsera", "Temperatura", "Oxígeno en la Sangre", "Frecuencia Cardíaca","Fecha y Hora", "Alerta"};
         
-        String [] registro = new String [4];
+        String [] registro = new String [6];
         
         _mod = new DefaultTableModel(null,titulos);
         
@@ -1256,10 +1279,12 @@ public class Conexion {
             _rs = _csta.executeQuery();  
             
             while(_rs.next()){
-                registro [0] = _rs.getString("_temperatura");
-                registro [1] = _rs.getString("_oxigenoSangre");
-                registro [2] = _rs.getString("_frecuenciaCardiaca");
-                registro [3] = _rs.getString("_fechaHora");                                                
+                registro [0] = _rs.getString("_idPulsera");
+                registro [1] = _rs.getString("_temperatura");
+                registro [2] = _rs.getString("_oxigenoSangre");
+                registro [3] = _rs.getString("_frecuenciaCardiaca");
+                registro [4] = _rs.getString("_fechaHora");                                                
+                registro [5] = _rs.getString("_estado");                                                
                 
                 _mod.addRow(registro);
             }
@@ -1388,8 +1413,7 @@ public class Conexion {
             _csta.setString(1, dts.getPaciente());                                                     
             _csta.setString(2, dts.getPadecimiento());
             
-           int _res = _csta.executeUpdate();
-            System.out.println(_res);
+           _csta.executeUpdate();           
             JOptionPane.showMessageDialog(null, "Se ha Actualizado correctamente", "Completado",1);                                                            
             
             _con.close();

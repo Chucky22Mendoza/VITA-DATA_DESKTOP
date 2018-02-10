@@ -13,13 +13,10 @@ import java.awt.HeadlessException;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
 /**
  *
@@ -43,7 +40,9 @@ public class LogIn extends javax.swing.JFrame {
         try {
             setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
         } catch (Exception e) {
+            
         }
+        txtUser.requestFocus();
     }
     
     protected void cargar(){
@@ -53,7 +52,8 @@ public class LogIn extends javax.swing.JFrame {
                 Doctor Doc = new Doctor();
                 Doc.setVisible(true);                
                 this.dispose();
-                JOptionPane.showMessageDialog(null, "BIENVENIDO","Completado" , 1);                            
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > ¡Bienvenido! </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Completado" , 1);                            
                 
                 doc = 0;
             }
@@ -61,9 +61,9 @@ public class LogIn extends javax.swing.JFrame {
                 
                 Secretaria  _sec = new Secretaria();
                 _sec.setVisible(true);                
-                this.dispose();
-                JOptionPane.showMessageDialog(null, "BIENVENIDO","Completado" , 1);                            
-                
+                this.dispose();                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > ¡Bienvenido! </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Completado" , 1);                            
                 adm = 0;
             }
         }
@@ -398,7 +398,8 @@ public class LogIn extends javax.swing.JFrame {
         dts.setPass(_pass);
         
         if (_user.isEmpty() || _pass.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos", "Campos requeridos", 2);
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Favor de llenar todos los campos </b> </body> </html>";
+            JOptionPane.showMessageDialog(null, mensaje, "Campos requeridos", 2);
         } else {
             try {
                 conect.getConexion(_user, _pass);
@@ -416,12 +417,14 @@ public class LogIn extends javax.swing.JFrame {
                             hiloBarra bar = new hiloBarra();
                             bar.start();          
                         }else{
-                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
+                            String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Usuario o contraseña incorrectos </b> </body> </html>";
+                            JOptionPane.showMessageDialog(null, mensaje, "Datos incorrectos", 3);
                         }                        
                     }
                                                
             }catch(HeadlessException e){
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Datos incorrectos", 3);
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Usuario o contraseña incorrectos </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Datos incorrectos", 3);
             }
         }
     }//GEN-LAST:event_btnSesionActionPerformed

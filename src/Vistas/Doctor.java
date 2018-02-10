@@ -15,8 +15,8 @@ import Procedimientos.GuardarPaciente;
 import Procedimientos.MedicoQuirurgico;
 import Procedimientos.Paciente;
 import Procedimientos.idPaciente;
+import Procedimientos.idPulsera;
 import com.sun.awt.AWTUtilities;
-import conexiones.conexionDB;
 import java.awt.Desktop;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -30,10 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +43,8 @@ import javax.swing.table.DefaultTableModel;
 public class Doctor extends javax.swing.JFrame {
 
     int _x, _y;
+    
+    public boolean ejecutar = true;
         
     /**
      * Creates new form Doctor
@@ -57,8 +59,7 @@ public class Doctor extends javax.swing.JFrame {
             setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
         } catch (Exception e) {
         }
-        Conexion _con = new Conexion();        
-        Paciente _pac = new Paciente();
+        Conexion _con = new Conexion();                
         cbPadecimiento.setModel(_con.getvalues5());        
         cbBuscar2.setModel(_con.getvalues6());
         cbMQ.setModel(_con.getvalues7());
@@ -74,20 +75,22 @@ public class Doctor extends javax.swing.JFrame {
         desbloquearBusquedaHis();
         bloquearInfo();
         iniciarInfo();
+        
     }
     
     private class Hilo implements Runnable{
 
         @Override
         public void run() {
-            while(true){
-                try{                    
-                    mostrarMonitoreo();                    
+            while(ejecutar){
+                try{                                     
+                    mostrarMonitoreo();    
+                    mandarAlerta();
                 }catch(Exception e){
-                    
+                    System.out.println(e);
                 }
                 try {
-                    Thread.sleep(300000);                                     
+                    Thread.sleep(30000);                                     
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -97,7 +100,9 @@ public class Doctor extends javax.swing.JFrame {
         
     }
     
-    
+    void detener(){
+        ejecutar = false;
+    }
     void bloquearBusquedaInfo(){
         cbPaciente1.setEnabled(false);
         btnPaciente1.setEnabled(false);
@@ -348,6 +353,50 @@ public class Doctor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }
+    
+    void mandarAlerta(){
+        Conexion _con = new Conexion();
+        idPulsera _dts = new idPulsera();
+        
+        int row = tableMonitoreo.getRowCount();        
+                
+        for (int i = 0; i < row; i++ ){
+            
+            int val = Integer.parseInt(tableMonitoreo.getValueAt(i, 5).toString());                                    
+           String nom, obtNom;                        
+
+            if(val == 3){                
+                
+                nom = tableMonitoreo.getValueAt(i,0).toString();                        
+                _dts.setIdPulsera(nom);
+                obtNom = _con.paciente(_dts);            
+                
+                getToolkit().beep();
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > PELIGRO, ES URGENTE UNA ATENCIÓN  AL PACIENTE " + obtNom.toUpperCase() + "</body> </html>";
+                Icon icono = new ImageIcon(getClass().getResource("../img/alert.png"));
+                JOptionPane.showMessageDialog(null, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE, icono);                    
+                
+            } else{
+                
+                if(val == 2){                    
+                    
+                    nom = tableMonitoreo.getValueAt(i,0).toString();                        
+                    _dts.setIdPulsera(nom);
+                    obtNom = _con.paciente(_dts);            
+                    
+                    getToolkit().beep();
+                    String mensaje = "<html> <body> <b style = \'font-size: 20; color: orange;\' > PRECAUCIÓN, EL PACIENTE " + obtNom.toUpperCase() + " ESTÁ EN RIESGO </body> </html>";
+                    Icon icono = new ImageIcon(getClass().getResource("../img/care.png"));
+                    JOptionPane.showMessageDialog(null, mensaje, "INFORMACIÓN", JOptionPane.INFORMATION_MESSAGE, icono);                    
+                    
+                } 
+                
+            }
+            
+        }
+        
+    }
+        
     
     void mostrarHistorial(){
         try {
@@ -2238,12 +2287,16 @@ public class Doctor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonIcon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIcon1ActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "¿Estás seguro de Cerrar Sesión?", "¡Cerrando Sesión!", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        
+        String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > ¿Estás seguro de Cerrar Sesión? </b> </body> </html>";
+        int resp = JOptionPane.showConfirmDialog(null, mensaje, "¡Cerrando Sesión!", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION){
                     LogIn  _log = new LogIn();                                                          
                     _log.setVisible(true);                    
-                    
-                    this.dispose();                               
+                    Conexion _con = new Conexion();
+                    _con.closeConexion();
+                    this.dispose();        
+                    detener();
                 }else{                    
                 }                                                                                   
     }//GEN-LAST:event_buttonIcon1ActionPerformed
@@ -2379,11 +2432,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Busqueda realizada </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda();
                 desbloquearBusqueda();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > No hay ningún resultado de la búsqueda </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda();
                 mostrarPacientes();
                 desbloquearBusqueda();
@@ -2408,11 +2463,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Busqueda realizada </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda();
                 desbloquearBusqueda();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > No hay ningún resultado de la búsqueda </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda();
                 mostrarPacientes();
                 desbloquearBusqueda();
@@ -2436,11 +2493,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Busqueda realizada </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda();
                 desbloquearBusqueda();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > No hay ningún resultado de la búsqueda </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda();
                 mostrarPacientes();
                 desbloquearBusqueda();
@@ -2464,11 +2523,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Busqueda realizada </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda();
                 desbloquearBusqueda();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > No hay ningún resultado de la búsqueda </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda();
                 mostrarPacientes();
                 desbloquearBusqueda();
@@ -2494,11 +2555,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Busqueda realizada </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda();
                 desbloquearBusqueda();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > No hay ningún resultado de la búsqueda </b> </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda();
                 mostrarPacientes();
                 desbloquearBusqueda();
@@ -2534,10 +2597,12 @@ public class Doctor extends javax.swing.JFrame {
         
 
         if(_nom.isEmpty() || _nac.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos", "Campos requeridos", 2);
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Favor de llenar todos los campos </b> </body> </html>";
+            JOptionPane.showMessageDialog(null, mensaje, "Campos requeridos", 2);
         } else{
                         _con.actualizarPaciente(dts);
-                        JOptionPane.showMessageDialog(null, "Se ha registrado correctamente", "Completado",1);                        
+                        String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Se ha registrado correctamente </b> </body> </html>";
+                        JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                        
                         mostrarPacientes();     
                         bloquear1();
                         limpiar1();                        
@@ -2554,7 +2619,8 @@ public class Doctor extends javax.swing.JFrame {
             txtNombre.setText(tablePaciente.getValueAt(_fila, 1).toString());                                                                                                                                 
             desbloquearModificar1();
         }else{
-            JOptionPane.showMessageDialog(null, "Fila no seleccionada","Error", 2);
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Fila no seleccionada </b> </body> </html>";
+            JOptionPane.showMessageDialog(null, mensaje,"Error", 2);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -2789,8 +2855,9 @@ public class Doctor extends javax.swing.JFrame {
         
         if ( _fila >= 0 ){                 
             txtNombre.setText(tablePaciente.getValueAt(_fila, 1).toString());   
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > Seleccione una opcion </b> </body> </html>";
             String[] options = {"Activo", "Inactivo"};
-            int resp = JOptionPane.showOptionDialog(null, "Seleccione una opcion", "Titulo", 
+            int resp = JOptionPane.showOptionDialog(null, mensaje, "Activo O Inactivo", 
             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             
             if(resp == 0){        
@@ -2814,7 +2881,8 @@ public class Doctor extends javax.swing.JFrame {
                 }
             }                                                
         }else{
-            JOptionPane.showMessageDialog(null, "Fila no seleccionada","Error", 2);            
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Fila no seleccionada </b> </body> </html>";
+            JOptionPane.showMessageDialog(null, mensaje,"Error", 2);            
         }
     }//GEN-LAST:event_btnActInaActionPerformed
 
@@ -2861,10 +2929,12 @@ public class Doctor extends javax.swing.JFrame {
         
 
         if(_nom.isEmpty() || _nac.isEmpty() || _tel1.isEmpty() || _tel2.isEmpty() || _tel3.isEmpty() || _tel4.isEmpty() || _rec.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Favor de llenar todos los campos", "Campos requeridos", 2);
+            String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > Favor de llenar todos los campos </b> </body> </html>";
+            JOptionPane.showMessageDialog(null, mensaje, "Campos requeridos", 2);
         } else{
                         _con.insertarPaciente(dts);
-                        JOptionPane.showMessageDialog(null, "Se ha registrado correctamente", "Completado",1);        
+                        String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' > Se ha registrado correctamente </b> </body> </html>";
+                        JOptionPane.showMessageDialog(null, mensaje, "Completado",1);        
                         bloquear1();
                         limpiar1();                 
                         mostrarPacientes();                                                
@@ -2993,9 +3063,9 @@ public class Doctor extends javax.swing.JFrame {
          ArrayList<String> listaAnt = new ArrayList<String>();
          listaAnt = _con.mostrarAnt(dts);
          
-         
-         JOptionPane.showMessageDialog(null, "Tipo de Operación: " + listaAnt.get(3) + 
-                 "\n Fecha: " + listaAnt.get(4), "Antecedentes Médico Quirúrgicos",1);
+         String mensaje = "<html> <body> <b style = \'font-size: 20; color: blue;\' > Tipo de Operación: " + listaAnt.get(3) + 
+                 "\n Fecha: " + listaAnt.get(4) +" </b> </body> </html>";
+         JOptionPane.showMessageDialog(null, mensaje, "Antecedentes Médico Quirúrgicos",1);
          
          
     }//GEN-LAST:event_btnMostrarMQActionPerformed
@@ -3138,11 +3208,13 @@ public class Doctor extends javax.swing.JFrame {
             int _fila = hisTable.getRowCount();            
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' >  </b> Busqueda realizada </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                    
                 limpiarBusqueda2();
                 desbloquearBusquedaHis();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' >  </b> No hay ningún resultado de la búsqueda </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                
                 limpiarBusqueda2();
                 mostrarHistorial();
                 desbloquearBusquedaHis();
@@ -3164,11 +3236,13 @@ public class Doctor extends javax.swing.JFrame {
             int _fila = hisTable.getRowCount();            
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' >  </b> Busqueda realizada </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                  
                 limpiarBusqueda2();
                 desbloquearBusquedaHis();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' >  </b> No hay ningún resultado de la búsqueda </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                   
                 limpiarBusqueda2();
                 mostrarHistorial();
                 desbloquearBusquedaHis();
@@ -3191,11 +3265,13 @@ public class Doctor extends javax.swing.JFrame {
             System.out.println(_fila);
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' >  </b> Busqueda realizada </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                     
                 limpiarBusqueda2();
                 desbloquearBusquedaHis();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' >  </b> No hay ningún resultado de la búsqueda </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                    
                 limpiarBusqueda2();
                 mostrarHistorial();
                 desbloquearBusquedaHis();
@@ -3218,11 +3294,13 @@ public class Doctor extends javax.swing.JFrame {
             int _fila = hisTable.getRowCount();            
             
             if(_fila > 0){
-                JOptionPane.showMessageDialog(null, "Busqueda realizada", "Completado",1);                    
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: green;\' >  </b> Busqueda realizada </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje, "Completado",1);                         
                 limpiarBusqueda2();
                 desbloquearBusquedaHis();
             }else{
-                JOptionPane.showMessageDialog(null, "No hay ningún resultado de la búsqueda","Error", 2);                
+                String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' >  </b> No hay ningún resultado de la búsqueda </body> </html>";
+                JOptionPane.showMessageDialog(null, mensaje,"Error", 2);                    
                 limpiarBusqueda2();
                 mostrarHistorial();
                 desbloquearBusquedaHis();

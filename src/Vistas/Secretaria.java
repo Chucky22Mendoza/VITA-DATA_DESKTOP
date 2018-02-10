@@ -2132,7 +2132,8 @@ public class Secretaria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonIcon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIcon1ActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "¿Estás seguro de Cerrar Sesión?", "¡Cerrando Sesión!", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        String mensaje = "<html> <body> <b style = \'font-size: 20; color: red;\' > ¿Estás seguro de Cerrar Sesión? </b> </body> </html>";
+        int resp = JOptionPane.showConfirmDialog(null, mensaje, "¡Cerrando Sesión!", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION){
                     LogIn  _log = new LogIn();                                        
                     _log.setVisible(true);                    
