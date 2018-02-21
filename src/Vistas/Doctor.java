@@ -842,7 +842,6 @@ public class Doctor extends javax.swing.JFrame {
             }
         });
 
-        tablePaciente.setBackground(new java.awt.Color(255, 153, 51));
         tablePaciente.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         tablePaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1115,12 +1114,11 @@ public class Doctor extends javax.swing.JFrame {
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnActIna, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnImprimir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1270,6 +1268,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(0, 0, 255));
         jLabel16.setText("Pulsera:");
 
+        txtNombre3.setDescripcion("Nombre");
         txtNombre3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         txtNombre3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1373,6 +1372,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel26.setForeground(new java.awt.Color(102, 102, 0));
         jLabel26.setText("DATOS DEL DOCTOR DE CABECERA");
 
+        txtNombre4.setDescripcion("Nombre");
         txtNombre4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         txtNombre4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1422,6 +1422,7 @@ public class Doctor extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel29.setText("-");
 
+        txtHospital.setDescripcion("Nombre de Hospital");
         txtHospital.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         txtHospital.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1429,6 +1430,7 @@ public class Doctor extends javax.swing.JFrame {
             }
         });
 
+        txtUsuario.setDescripcion("Nombre de usuario");
         txtUsuario.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
         jLabel31.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -1880,7 +1882,6 @@ public class Doctor extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
-        tableMonitoreo.setBackground(new java.awt.Color(255, 153, 51));
         tableMonitoreo.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         tableMonitoreo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2090,7 +2091,6 @@ public class Doctor extends javax.swing.JFrame {
             }
         });
 
-        hisTable.setBackground(new java.awt.Color(255, 153, 51));
         hisTable.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         hisTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2887,8 +2887,8 @@ public class Doctor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActInaActionPerformed
 
     private void btnPaciente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaciente3ActionPerformed
-        String link = "https://app-1501208568.000webhostapp.com/";
-        
+        //String link = "https://app-1501208568.000webhostapp.com/";
+        String link = "http://localhost/Vita-Data_INDAJO/login.html";
         try {
             Desktop.getDesktop().browse(new URI(link));
         } catch (Exception e) {

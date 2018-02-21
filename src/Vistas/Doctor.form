@@ -787,9 +787,6 @@
                           <SubComponents>
                             <Component class="javax.swing.JTable" name="tablePaciente">
                               <Properties>
-                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="33" green="99" red="ff" type="rgb"/>
-                                </Property>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Arial" size="18" style="1"/>
                                 </Property>
@@ -1533,6 +1530,7 @@
                         </Component>
                         <Component class="org.edisoncor.gui.textField.TextFieldRoundBackground" name="txtNombre3">
                           <Properties>
+                            <Property name="descripcion" type="java.lang.String" value="Nombre"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Arial" size="18" style="1"/>
                             </Property>
@@ -1730,6 +1728,7 @@
                         </Component>
                         <Component class="org.edisoncor.gui.textField.TextFieldRoundBackground" name="txtNombre4">
                           <Properties>
+                            <Property name="descripcion" type="java.lang.String" value="Nombre"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Arial" size="18" style="1"/>
                             </Property>
@@ -1805,6 +1804,7 @@
                         </Component>
                         <Component class="org.edisoncor.gui.textField.TextFieldRoundBackground" name="txtHospital">
                           <Properties>
+                            <Property name="descripcion" type="java.lang.String" value="Nombre de Hospital"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Arial" size="18" style="1"/>
                             </Property>
@@ -1815,6 +1815,7 @@
                         </Component>
                         <Component class="org.edisoncor.gui.textField.TextFieldRoundBackground" name="txtUsuario">
                           <Properties>
+                            <Property name="descripcion" type="java.lang.String" value="Nombre de usuario"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Arial" size="18" style="1"/>
                             </Property>
@@ -2217,9 +2218,6 @@
                           <SubComponents>
                             <Component class="javax.swing.JTable" name="tableMonitoreo">
                               <Properties>
-                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="33" green="99" red="ff" type="rgb"/>
-                                </Property>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Arial" size="18" style="1"/>
                                 </Property>
@@ -2584,9 +2582,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="hisTable">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="33" green="99" red="ff" type="rgb"/>
-                        </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="18" style="1"/>
                         </Property>

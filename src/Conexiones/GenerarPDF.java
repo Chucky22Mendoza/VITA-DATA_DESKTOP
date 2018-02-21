@@ -12,7 +12,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.lowagie.text.Element;
+import com.itextpdf.text.*;
 import java.io.FileOutputStream;
 
 /**

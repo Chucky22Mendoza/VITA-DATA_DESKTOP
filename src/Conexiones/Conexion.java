@@ -44,10 +44,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
-/**
- *
- * @author mendo
- */
+
 public class Conexion {
     static Connection _con; //Variable para conectar tipo connection
     public String _driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // driver de Sql Server

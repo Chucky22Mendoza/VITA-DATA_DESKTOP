@@ -35,8 +35,7 @@ public class LogIn extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         Shape _form = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 27, 27);
-        AWTUtilities.setWindowShape(this, _form);
-        //barra.setVisible(false);
+        AWTUtilities.setWindowShape(this, _form);        
         try {
             setIconImage(new ImageIcon(getClass().getResource("../img/corazon.png")).getImage());
         } catch (Exception e) {

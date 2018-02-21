@@ -18,7 +18,6 @@ import Procedimientos.GuardarHospital;
 import Procedimientos.HistorialAtencion;
 import Procedimientos.RegistrarCita;
 import Procedimientos.mostrarDoc;
-import static Vistas.Doctor.tablePaciente;
 import com.sun.awt.AWTUtilities;
 import conexiones.conexionDB;
 import java.awt.MouseInfo;
@@ -753,7 +752,6 @@ public class Secretaria extends javax.swing.JFrame {
             }
         });
 
-        docTable.setBackground(new java.awt.Color(255, 153, 51));
         docTable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         docTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1137,7 +1135,6 @@ public class Secretaria extends javax.swing.JFrame {
             }
         });
 
-        insTable.setBackground(new java.awt.Color(255, 153, 51));
         insTable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         insTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1503,7 +1500,6 @@ public class Secretaria extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(204, 204, 204));
 
-        hisTable.setBackground(new java.awt.Color(255, 153, 51));
         hisTable.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         hisTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1730,7 +1726,7 @@ public class Secretaria extends javax.swing.JFrame {
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedSelector21, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                .addComponent(tabbedSelector21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1951,7 +1947,6 @@ public class Secretaria extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
-        pacTable.setBackground(new java.awt.Color(255, 153, 51));
         pacTable.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         pacTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
