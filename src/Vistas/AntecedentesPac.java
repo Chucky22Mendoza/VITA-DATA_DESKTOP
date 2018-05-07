@@ -79,7 +79,8 @@ public class AntecedentesPac extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelRectTranslucido1.setColorPrimario(new java.awt.Color(255, 0, 0));
+        panelRectTranslucido1.setColorPrimario(new java.awt.Color(153, 153, 153));
+        panelRectTranslucido1.setColorSecundario(new java.awt.Color(153, 153, 153));
         panelRectTranslucido1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelRectTranslucido1MouseDragged(evt);

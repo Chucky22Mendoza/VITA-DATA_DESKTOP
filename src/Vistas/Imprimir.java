@@ -60,10 +60,10 @@ public class Imprimir extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelRound1.setColorDeBorde(new java.awt.Color(102, 255, 255));
-        panelRound1.setColorDeSegundoBorde(new java.awt.Color(102, 51, 255));
-        panelRound1.setColorPrimario(new java.awt.Color(102, 102, 255));
-        panelRound1.setColorSecundario(new java.awt.Color(0, 204, 153));
+        panelRound1.setColorDeBorde(new java.awt.Color(0, 0, 0));
+        panelRound1.setColorDeSegundoBorde(new java.awt.Color(153, 153, 153));
+        panelRound1.setColorPrimario(new java.awt.Color(153, 153, 153));
+        panelRound1.setColorSecundario(new java.awt.Color(153, 153, 153));
         panelRound1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelRound1MouseDragged(evt);

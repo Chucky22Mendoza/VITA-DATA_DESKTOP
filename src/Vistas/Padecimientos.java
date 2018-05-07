@@ -113,8 +113,8 @@ public class Padecimientos extends javax.swing.JFrame {
             }
         });
 
-        panelTranslucido1.setColorPrimario(new java.awt.Color(102, 204, 255));
-        panelTranslucido1.setColorSecundario(new java.awt.Color(204, 0, 102));
+        panelTranslucido1.setColorPrimario(new java.awt.Color(153, 153, 153));
+        panelTranslucido1.setColorSecundario(new java.awt.Color(153, 153, 153));
         panelTranslucido1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelTranslucido1MouseDragged(evt);

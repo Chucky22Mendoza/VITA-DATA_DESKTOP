@@ -56,6 +56,7 @@ public class NuevoMQ extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        panelShadow1.setBackground(new java.awt.Color(153, 153, 153));
         panelShadow1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panelShadow1MouseDragged(evt);
