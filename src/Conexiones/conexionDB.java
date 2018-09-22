@@ -11,7 +11,7 @@ public class conexionDB {
     private String _user = "root";
     private String _pass = "";
     private String _host = "localhost";
-    private String _nombreDB = "login";
+    private String _nombreDB = "vitadata";
     
     public Connection conexion(){
         try{

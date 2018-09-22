@@ -278,6 +278,7 @@ public class Conexion {
             }
         return _mod;
         }
+    
     public DefaultComboBoxModel getvalues2(){
         DefaultComboBoxModel _mod = new DefaultComboBoxModel();
         try{
